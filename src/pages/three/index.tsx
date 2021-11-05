@@ -1,5 +1,6 @@
 import styles from './index.less';
 import * as THREE from 'three';
+import OrbitControls  from 'three-orbitcontrols';
 import {useEffect,useState,useCallback} from 'react';
 
 export default function IndexPage() {
@@ -9,30 +10,36 @@ export default function IndexPage() {
   },[]);
 
   const initThree = () => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    const width = window.innerWidth
+    const height = window.innerHeight
 
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000)
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    const cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(width, height)
+    // document.body.appendChild(renderer.domElement)
+    document.getElementById('threeBox').appendChild(renderer.domElement)
 
-    camera.position.z = 5;
+    const geometry = new THREE.BoxGeometry(1, 1, 1)
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+    const cube = new THREE.Mesh(geometry, material)
+    scene.add(cube)
 
-    const animate = function () {
-      requestAnimationFrame( animate );
+    camera.position.z = 5
 
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+    const controls = new OrbitControls(camera, renderer.domElement)
 
-      renderer.render( scene, camera );
-    };
+    function animate() {
+      requestAnimationFrame(animate)
 
-    animate();
+      cube.rotation.x += 0.01
+      cube.rotation.y += 0.01
+
+      renderer.render(scene, camera)
+    }
+
+    animate()
   }
 
   return (
