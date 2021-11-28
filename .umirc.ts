@@ -4,8 +4,10 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  base: 'webgl',
+  publicPath: '/webgl/',
   routes: [
-    { path: '/', component: '@/pages/three4/index' },
+    { path: '/', component: '@/pages/three5/index' },
     // { path: '/three1', component: '@/pages/three/index' },
     // { path: '/three2', component: '@/pages/three2/index' },
     // { path: '/three3', component: '@/pages/three3/index' },
